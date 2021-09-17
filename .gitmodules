@@ -1,0 +1,3 @@
+[submodule "isamples_inabox"]
+	path = isamples_inabox
+	url = git@github.com:isamplesorg/isamples_inabox.git
