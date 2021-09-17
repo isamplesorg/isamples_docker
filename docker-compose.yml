@@ -10,12 +10,13 @@ services:
             - pgdata:/var/lib/postgresql/data
         
     solr:
-        image: solr:latest
+        build: ./solr/
         volumes:
             - solrdata:/var/solr
         ports:
             - "8983:8983"
         command: solr -f -cloud
+        
     isamples_inabox:
         build: ./isamples_inabox/
         ports:
@@ -23,13 +24,17 @@ services:
         depends_on:
             - solr
             - db
-    solr_schema_init:
-        build: ./isamples_inabox/
-        depends_on:
-            - isamples_inabox
-            - db
-            - solr
-        command: python solr_schema_init/create_isb_core_schema.py    
+    # This could be automated, but is non-trivial at the moment.  Revisit in the future, maybe.  
+    # In the meantime, just hit the open port at 8983 and use the admin UI to create the collection,
+    # then manually run a command in the iSB container to create the schema.
+    # 
+    # solr_schema_init:
+    #     build: ./isamples_inabox/
+    #     depends_on:
+    #         - isamples_inabox
+    #         - db
+    #         - solr
+    #     command: python solr_schema_init/create_isb_core_schema.py    
     
 volumes:
     pgdata:
