@@ -3,6 +3,8 @@ FROM python:latest
 
 WORKDIR /app
 
+RUN apt-get update -y
+RUN apt-get install -y libgeos-dev
 COPY ./isamples_inabox/requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 

@@ -4,6 +4,10 @@ Location to store resources needed to build iSamples Docker containers
 ## Prerequisites
 * Install docker
     https://docs.docker.com/engine/install/
+* Configure a docker group and add your user to it
+    https://docs.docker.com/engine/install/linux-postinstall/
+* Install docker compose
+    https://docs.docker.com/compose/install/
 * Install git-lfs
     https://git-lfs.github.com
     
@@ -12,7 +16,13 @@ First initialize the submodules so you have iSamples in a box pulled in correctl
 `git submodule init`
 `git submodule update`
 
-Then run the docker build: `docker-compose up --build`
+You'll then want to check out the develop branch:
+`cd isb/isamples_inabox`
+`git checkout develop`
+
+Then cd back to the root:
+`cd ../..`
+and run the docker build: `docker-compose up --build`
 
 This should have brought up the containers
 
