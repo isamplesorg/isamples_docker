@@ -20,8 +20,13 @@ You'll then want to check out the develop branch:
 `cd isb/isamples_inabox`
 `git checkout develop`
 
+Then cd up to the isb docker directory and initialize git lfs:
+`cd ..`
+`git lfs install`
+`git lfs pull`
+
 Then cd back to the root:
-`cd ../..`
+`cd ..`
 and run the docker build: `docker-compose up --build`
 
 This should have brought up the containers
