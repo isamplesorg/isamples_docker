@@ -47,3 +47,13 @@ The Solr schema should have also been created -- check it at http://localhost:89
     `python scripts/opencontext_things.py --config ./isb.cfg load -m 1000`
 * Run a solr import once the db is done:
     `python scripts/opencontext_things.py --config ./isb.cfg populate_isb_core_solr -m 1000`
+    
+### Import SQL dump into the db
+* Dump the data from an existing source:
+    pg_dump -U isb_writer -h localhost -d isb_1 > isamples.sql
+* Copy the file into the container:
+    `docker ps` -- get the name of the postgres container
+    `docker cp isamples.sql isamples_docker_db_1:/isamples.sql` -- copy it into the container where `isamples_docker_db_1` is the container name obtained from `docker ps`
+* Run the import in the container:
+    `docker exec -it isamples_docker_db_1 bash` -- open a shell
+    `psql --username=isb_writer --dbname=isb_1 -f ./isamples.sql`
