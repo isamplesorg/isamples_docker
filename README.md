@@ -40,7 +40,7 @@ The Solr schema should have also been created -- check it at http://localhost:89
 * Find the iSB Docker container like this:
     `docker ps`
 * Run bash in the iSB container like this:
-    `docker exec -it 8743be6ee2f1 bash`
+    `docker exec -it isamples_docker_isamples_inabox_1 bash`
 * Once inside bash, export PYTHONPATH to our container install directory (not quite sure why this is required)
     `export PYTHONPATH=/app`
 * Run a db import:
@@ -57,3 +57,25 @@ The Solr schema should have also been created -- check it at http://localhost:89
 * Run the import in the container:
     `docker exec -it isamples_docker_db_1 bash` -- open a shell
     `psql --username=isb_writer --dbname=isb_1 -f ./isamples.sql`
+
+### Manually control the containers with systemctl
+* Create the service file at `/etc/systemd/system/isb_opencontext.service`
+    ```
+    [Unit]
+    Description=Docker Compose iSB OpenContext Application Service
+    Requires=docker.service
+    After=docker.service
+
+    [Service]
+    Type=oneshot
+    RemainAfterExit=yes
+    WorkingDirectory=/home/isamples/isamples_inabox_opencontext/isamples_docker
+    ExecStart=/usr/local/bin/docker-compose up -d
+    ExecStop=/usr/local/bin/docker-compose down
+    TimeoutStartSec=0
+
+    [Install]
+    WantedBy=multi-user.target    
+    ```
+* Bring it up (or down)
+    `sudo systemctl start isb_opencontext`
