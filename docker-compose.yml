@@ -5,7 +5,7 @@ services:
         environment:
             - POSTGRES_PASSWORD=isamplesinabox
             - POSTGRES_USER=isb_writer
-            - POSTGRES_DB=isb_1
+            - POSTGRES_DB=isb_2
         volumes:
             - pgdata:/var/lib/postgresql/data
         
