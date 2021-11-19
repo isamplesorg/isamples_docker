@@ -16,6 +16,8 @@ COPY ./isb.cfg .
 COPY ./cron/ .
 COPY ./cron/crontab /etc/cron.d/update_crontab
 RUN chmod 0644 /etc/cron.d/update_crontab
+
+# Start this up in a shell script, per https://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/
 CMD [ "isb_container_startup.sh" ]
 
 # Uncomment this line to keep the container running if for any reason you are having trouble getting it to come up.
