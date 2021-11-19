@@ -70,7 +70,7 @@ The Solr schema should have also been created -- check it at http://localhost:89
     Type=oneshot
     RemainAfterExit=yes
     WorkingDirectory=/home/isamples/isamples_inabox_opencontext/isamples_docker
-    ExecStart=/usr/local/bin/docker-compose up -d
+    ExecStart=/usr/local/bin/docker-compose up --build
     ExecStop=/usr/local/bin/docker-compose down
     TimeoutStartSec=0
 
