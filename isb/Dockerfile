@@ -14,7 +14,7 @@ COPY ./isamples_metadata.env .
 COPY ./sampledFeature.bin .
 COPY ./isb.cfg .
 COPY ./isb_container_startup.sh .
-COPY ./cron .
+COPY ./cron/ .
 COPY ./cron/crontab /etc/cron.d/update_crontab
 RUN chmod 0644 /etc/cron.d/update_crontab
 
