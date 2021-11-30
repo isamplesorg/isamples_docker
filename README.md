@@ -27,7 +27,7 @@ Then cd up to the isb docker directory and initialize git lfs:
 
 Then cd back to the root:
 `cd ..`
-and run the docker build: `docker-compose up --build`
+and run the docker build for the flavor you are interested in: `docker-compose --env-file .env.opencontext up --build`
 
 This should have brought up the containers
 
@@ -70,7 +70,7 @@ The Solr schema should have also been created -- check it at http://localhost:89
     Type=oneshot
     RemainAfterExit=yes
     WorkingDirectory=/home/isamples/isamples_inabox_opencontext/isamples_docker
-    ExecStart=/usr/local/bin/docker-compose up --build
+    ExecStart=/usr/local/bin/docker-compose --env-file .env.opencontext up --build
     ExecStop=/usr/local/bin/docker-compose down
     TimeoutStartSec=0
 

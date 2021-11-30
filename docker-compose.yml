@@ -14,13 +14,14 @@ services:
         volumes:
             - solrdata:/var/solr
         ports:
-            - "8983:8983"
+            - "${SOLR_PORT}:8983"
         command: solr -f -cloud
         
     isamples_inabox:
         build: ./isb/
         ports:
-            - "8000:8000"
+            # In the Docker network, start on 8000 and map that to the external port specified in the environment file
+            - "${ISB_PORT}:8000"
         depends_on:
             - solr
             - db
