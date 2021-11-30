@@ -22,6 +22,6 @@
 # m h  dom mon dow   command
 
 # 05 0 * * 2 /home/isamples/cron/sesar_update.sh
-* * * * * /app/opencontext_update.sh
+10 2 * * 2 /app/opencontext_update.sh
 # 15 4 * * 2 /home/isamples/cron/geome_update.sh
 15 22 * * 2 /app/generate_sitemap.sh
