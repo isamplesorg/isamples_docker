@@ -24,6 +24,15 @@ services:
         depends_on:
             - solr
             - db
+            
+    isamples_inabox_cron:
+        build: ./isb/
+        depends_on:
+            - isamples_inabox
+            - solr
+            - db
+        entrypoint: /bin/bash
+        command: /app/isb_container_startup.sh
 
     solr_schema_init:
         build: ./isb/

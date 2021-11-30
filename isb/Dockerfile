@@ -20,9 +20,14 @@ COPY ./isb_container_startup.sh .
 COPY ./cron/ .
 COPY ./cron/crontab /etc/cron.d/update_crontab
 RUN chmod 0644 /etc/cron.d/update_crontab
+RUN touch /var/log/cron.log
+RUN crontab /etc/cron.d/update_crontab
+RUN mkdir /var/log/isamples
+RUN chmod 755 /var/log/isamples
 
 # Start this up in a shell script, per https://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/
-CMD [ "/app/isb_container_startup.sh" ]
+# CMD [ "/app/isb_container_startup.sh" ]
+CMD [ "uvicorn", "isb_web.main:app", "--host", "0.0.0.0", "--port", "8000" ]
 
 # Uncomment this line to keep the container running if for any reason you are having trouble getting it to come up.
-#CMD ["tail", "-f", "/dev/null"]
+# CMD ["tail", "-f", "/dev/null"]

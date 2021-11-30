@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd /app
+export PYTHONPATH=/app
 echo "Going to invoke SESAR update load"
 python scripts/sesar_things.py --config ./isb.cfg load -m -1 >& /var/log/isamples/`date "+%Y-%m-%d"`.sesar_load.txt
 echo "Going to invoke SESAR solr update"

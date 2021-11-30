@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd /app
+export PYTHONPATH=/app
 echo "Going to invoke GEOME update load"
 python scripts/geome_things.py --config ./isb.cfg load -m -1 >& /var/log/isamples/`date "+%Y-%m-%d"`.geome_load.txt
 echo "Going to invoke GEOME solr update"
