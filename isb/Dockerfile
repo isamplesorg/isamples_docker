@@ -3,10 +3,13 @@ FROM python:latest
 
 WORKDIR /app
 
-RUN apt-get update -y && apt-get install -y libgeos-dev && apt-get install -y cron
+# The installation of the python requirements should be basically the first thing here.  Docker files will re-run steps
+# that appear after a step that has changed.  Setting up the python environment is the most time-consuming step; put
+# it first so it only executes when it absolutely has to.
 COPY ./isamples_inabox/requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
+RUN apt-get update -y && apt-get install -y libgeos-dev && apt-get install -y cron
 
 COPY ./isamples_inabox/ .
 COPY ./isb_web_config.env .
