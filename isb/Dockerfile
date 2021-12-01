@@ -18,7 +18,10 @@ COPY ./sampledFeature.bin .
 COPY ./isb.cfg .
 COPY ./isb_container_startup.sh .
 COPY ./cron/ .
-COPY ./cron/crontab /etc/cron.d/update_crontab
+# We expect this to be passed in from the docker compose .env file
+ARG CRONTAB_FILE=crontab.opencontext
+RUN echo "CRONTAB FILE IS $CRONTAB_FILE"
+COPY ./cron/$CRONTAB_FILE /etc/cron.d/update_crontab
 RUN chmod 0644 /etc/cron.d/update_crontab
 RUN touch /var/log/cron.log
 RUN crontab /etc/cron.d/update_crontab

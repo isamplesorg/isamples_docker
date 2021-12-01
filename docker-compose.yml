@@ -18,13 +18,20 @@ services:
         command: solr -f -cloud
         
     isamples_inabox:
-        build: ./isb/
+        build:
+            context: ./isb/
+            args:
+                CRONTAB_FILE: ${CRONTAB_FILE}        
         ports:
             # In the Docker network, start on 8000 and map that to the external port specified in the environment file
             - "${ISB_PORT}:8000"
         depends_on:
             - solr
             - db
+        # Note that this appears to be available in things that run in the Docker container, but not at container build time.
+        # environment:
+        #     - CRONTAB_FILE=${CRONTAB_FILE}
+
 
     solr_schema_init:
         build: ./isb/
