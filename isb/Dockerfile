@@ -17,7 +17,6 @@ COPY ./isamples_metadata.env .
 COPY ./sampledFeature.bin .
 COPY ./isb.cfg .
 COPY ./isb_container_startup.sh .
-COPY ./cron/ .
 # We expect this to be passed in from the docker compose .env file
 ARG CRONTAB_FILE=crontab.opencontext
 RUN echo "CRONTAB FILE IS $CRONTAB_FILE"

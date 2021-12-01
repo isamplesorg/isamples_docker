@@ -28,9 +28,8 @@ services:
         depends_on:
             - solr
             - db
-        # Note that this appears to be available in things that run in the Docker container, but not at container build time.
-        # environment:
-        #     - CRONTAB_FILE=${CRONTAB_FILE}
+        environment:
+            - ISB_UVICORN_ROOT_PATH=${UVICORN_ROOT_PATH}
 
 
     solr_schema_init:
