@@ -30,6 +30,7 @@ services:
             - db
         environment:
             - ISB_UVICORN_ROOT_PATH=${UVICORN_ROOT_PATH}
+            - ISB_SITEMAP_PREFIX=https://${ISB_HOST}/${UVICORN_ROOT_PATH}
 
 
     solr_schema_init:
