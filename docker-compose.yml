@@ -7,12 +7,12 @@ services:
             - POSTGRES_USER=isb_writer
             - POSTGRES_DB=isb_2
         volumes:
-            - ${PG_VOLUME_NAME}:/var/lib/postgresql/data
+            - pg_data:/var/lib/postgresql/data
         
     solr:
         build: ./solr/
         volumes:
-            - ${SOLR_VOLUME_NAME}:/var/solr
+            - solr_data:/var/solr
         ports:
             - "${SOLR_PORT}:8983"
         command: solr -f -cloud
@@ -40,5 +40,7 @@ services:
         command: python solr_schema_init/create_isb_core_schema.py    
     
 volumes:
-    ${PG_VOLUME_NAME}:
-    ${SOLR_VOLUME_NAME}:
+    pg_data:
+        name: ${PG_VOLUME_NAME}
+    solr_data:
+        name: ${SOLR_VOLUME_NAME}
