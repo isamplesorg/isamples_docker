@@ -5,7 +5,7 @@ services:
         environment:
             - POSTGRES_PASSWORD=isamplesinabox
             - POSTGRES_USER=isb_writer
-            - POSTGRES_DB=isb_2
+            - POSTGRES_DB=isb_1
         volumes:
             - ${PG_VOLUME_NAME}:/var/lib/postgresql/data
         
@@ -42,6 +42,4 @@ services:
     
 volumes:
     ${PG_VOLUME_NAME}:
-        # name: ${PG_VOLUME_NAME}
     ${SOLR_VOLUME_NAME}:
-        # name: ${SOLR_VOLUME_NAME}
