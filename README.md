@@ -70,8 +70,8 @@ The Solr schema should have also been created -- check it at http://localhost:89
     Type=oneshot
     RemainAfterExit=yes
     WorkingDirectory=/home/isamples/isamples_inabox_opencontext/isamples_docker
-    ExecStart=/usr/local/bin/docker-compose --env-file .env.opencontext up --build
-    ExecStop=/usr/local/bin/docker-compose down
+    ExecStart=/usr/local/bin/docker compose --env-file .env.sesar -p isamples_docker_sesar up --build
+    ExecStop=/usr/local/bin/docker compose down -p isamples_docker_sesar
     TimeoutStartSec=0
 
     [Install]
