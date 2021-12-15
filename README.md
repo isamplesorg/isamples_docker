@@ -8,6 +8,7 @@ Location to store resources needed to build iSamples Docker containers
     https://docs.docker.com/engine/install/linux-postinstall/
 * Install docker compose
     https://docs.docker.com/compose/install/
+    https://docs.docker.com/compose/cli-command/#installing-compose-v2    
 * Install git-lfs
     https://git-lfs.github.com
     
