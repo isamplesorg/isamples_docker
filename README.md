@@ -4,6 +4,11 @@ Location to store resources needed to build iSamples Docker containers
 ## Prerequisites
 * Install docker
     https://docs.docker.com/engine/install/
+* Configure a docker group and add your user to it
+    https://docs.docker.com/engine/install/linux-postinstall/
+* Install docker compose
+    https://docs.docker.com/compose/install/
+    https://docs.docker.com/compose/cli-command/#installing-compose-v2    
 * Install git-lfs
     https://git-lfs.github.com
     
@@ -12,7 +17,18 @@ First initialize the submodules so you have iSamples in a box pulled in correctl
 `git submodule init`
 `git submodule update`
 
-Then run the docker build: `docker-compose up --build`
+You'll then want to check out the develop branch:
+`cd isb/isamples_inabox`
+`git checkout develop`
+
+Then cd up to the isb docker directory and initialize git lfs:
+`cd ..`
+`git lfs install`
+`git lfs pull`
+
+Then cd back to the root:
+`cd ..`
+and run the docker build for the flavor you are interested in: `docker-compose --env-file .env.opencontext up --build`
 
 This should have brought up the containers
 
@@ -25,10 +41,42 @@ The Solr schema should have also been created -- check it at http://localhost:89
 * Find the iSB Docker container like this:
     `docker ps`
 * Run bash in the iSB container like this:
-    `docker exec -it 8743be6ee2f1 bash`
+    `docker exec -it isamples_docker_isamples_inabox_1 bash`
 * Once inside bash, export PYTHONPATH to our container install directory (not quite sure why this is required)
     `export PYTHONPATH=/app`
 * Run a db import:
     `python scripts/opencontext_things.py --config ./isb.cfg load -m 1000`
 * Run a solr import once the db is done:
     `python scripts/opencontext_things.py --config ./isb.cfg populate_isb_core_solr -m 1000`
+    
+### Import SQL dump into the db
+* Dump the data from an existing source:
+    pg_dump -U isb_writer -h localhost -d isb_1 > isamples.sql
+* Copy the file into the container:
+    `docker ps` -- get the name of the postgres container
+    `docker cp isamples.sql isamples_docker_db_1:/isamples.sql` -- copy it into the container where `isamples_docker_db_1` is the container name obtained from `docker ps`
+* Run the import in the container:
+    `docker exec -it isamples_docker_db_1 bash` -- open a shell
+    `psql --username=isb_writer --dbname=isb_1 -f ./isamples.sql`
+
+### Manually control the containers with systemctl
+* Create the service file at `/etc/systemd/system/isb_opencontext.service`
+    ```
+    [Unit]
+    Description=Docker Compose iSB OpenContext Application Service
+    Requires=docker.service
+    After=docker.service
+
+    [Service]
+    Type=oneshot
+    RemainAfterExit=yes
+    WorkingDirectory=/home/isamples/isamples_inabox_opencontext/isamples_docker
+    ExecStart=/usr/bin/docker compose --env-file .env.sesar -p isamples_docker_sesar up --build
+    ExecStop=/usr/bin/docker compose -p isamples_docker_sesar down 
+    TimeoutStartSec=0
+
+    [Install]
+    WantedBy=multi-user.target    
+    ```
+* Bring it up (or down)
+    `sudo systemctl start isb_opencontext`
