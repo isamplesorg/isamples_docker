@@ -28,7 +28,7 @@ Then cd up to the isb docker directory and initialize git lfs:
 
 Then cd back to the root:
 `cd ..`
-and run the docker build for the flavor you are interested in: `docker-compose --env-file .env.opencontext up --build`
+and run the docker build for the flavor you are interested in: `docker-compose --env-file .env.opencontext -p isamples_docker_opencontext up --build`
 
 This should have brought up the containers
 

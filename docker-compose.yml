@@ -21,7 +21,9 @@ services:
         build:
             context: ./isb/
             args:
-                CRONTAB_FILE: ${CRONTAB_FILE}        
+                CRONTAB_FILE: ${CRONTAB_FILE}
+                ENV_FILE: ${ENV_FILE}
+                
         ports:
             # In the Docker network, start on 8000 and map that to the external port specified in the environment file
             - "${ISB_PORT}:8000"
