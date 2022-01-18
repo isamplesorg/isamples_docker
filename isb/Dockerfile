@@ -22,6 +22,11 @@ COPY ./cron/ .
 ARG CRONTAB_FILE=crontab.opencontext
 RUN echo "CRONTAB FILE IS $CRONTAB_FILE"
 COPY ./cron/$CRONTAB_FILE /etc/cron.d/update_crontab
+
+ARG ENV_FILE=opencontext.isb_web_config.env
+RUN echo "ENV FILE IS $ENV_FILE"
+COPY ./isb_web_config/$ENV_FILE ./isb_web_config.env
+
 RUN chmod 0644 /etc/cron.d/update_crontab
 RUN touch /var/log/cron.log
 RUN crontab /etc/cron.d/update_crontab
