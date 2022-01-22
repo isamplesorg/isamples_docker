@@ -14,7 +14,7 @@ services:
         volumes:
             - solr_data:/var/solr
         ports:
-            - "8983"            
+            - "${SOLR_PORT}:8983"            
         command: solr -f -cloud
         
     isamples_inabox:
