@@ -78,9 +78,23 @@ The Solr schema should have also been created -- check it at http://localhost:89
     [Install]
     WantedBy=multi-user.target    
     ```
-* Bring it up (or down)
-    `sudo systemctl start isb_opencontext`
+* Bring it up: `sudo systemctl start isb_opencontext`
+* Shut it down: `sudo systemctl stop isb_opencontext`
 
+### Updating dependencies
+
+Images are cached, so it is necessary to force a pull from the hub in order to get updates. This example updates solr to the latest:
+
+```
+sudo docker pull solr:latest
+```
+
+Then rebuild the container. The containers operated with `systemd` are removed on shutdown and built on startup. So after a new image is pulled, simply shutdown and start the service. 
+
+Information about an image can be found with:
+```
+sudo docker image history solr
+```
 
 ## Setting up nginx
 
