@@ -96,6 +96,26 @@ Information about an image can be found with:
 sudo docker image history solr
 ```
 
+### React build output
+The React build output is copied to the iSamples in a Box image and served from uvicorn at the `/ui` path.  During development, it is helpful to run the React build by itself.  You may do so like this:
+
+```
+docker build --target node_build .
+```
+
+This will create an image and you can grab the image id for the image by running `docker image ls`.  After that you may run the image and open a shell by:
+
+```
+docker run image_id_
+docker exec -it image_id bash
+```
+
+Inside the image, the build output will be located at `/app/build` -- you may copy that out of the image and open it in your favorite web browser if need be:
+
+```
+docker cp image_name:/app/build ~/Desktop/
+```
+
 ## Setting up nginx
 
 [`nginx`](https://www.nginx.com/) can be configured as the front-end web server for the web serverice offered by the docker instance. These commands all require sudo.
