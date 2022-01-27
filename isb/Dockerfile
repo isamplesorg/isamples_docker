@@ -1,5 +1,22 @@
 # syntax=docker/dockerfile:1
-FROM python:latest
+
+# Build the React app
+FROM node:latest AS node_build
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY ./isamples_webui/faceted_search/package.json ./
+COPY ./isamples_webui/faceted_search/package-lock.json ./
+RUN npm ci --silent
+COPY ./solr-faceted-search-react /solr-faceted-search-react
+RUN npm link /solr-faceted-search-react
+COPY ./isamples_webui/faceted_search/ ./
+RUN npm run build
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+
+
+
+# Build the main Python app
+FROM python:latest AS main
 
 WORKDIR /app
 
@@ -31,6 +48,10 @@ RUN touch /var/log/cron.log
 RUN crontab /etc/cron.d/update_crontab
 RUN mkdir /var/log/isamples
 RUN chmod 755 /var/log/isamples
+
+# Put the React build output inside isb_web ui directory for serving as part of the uvicorn installation
+COPY --from=node_build /build/ /app/isb_web/ui/
+
 
 # Start this up in a shell script, per https://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/
 CMD [ "/app/isb_container_startup.sh" ]
