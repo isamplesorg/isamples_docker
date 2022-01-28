@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-# Build the React app
+# Build the React app using multistage builds (https://docs.docker.com/develop/develop-images/multistage-build/)
 FROM node:latest AS node_build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
