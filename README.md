@@ -13,13 +13,10 @@ Location to store resources needed to build iSamples Docker containers
     https://git-lfs.github.com
     
 ## How to build container
-First initialize the submodules so you have iSamples in a box pulled in correctly:
+First initialize the submodules so you have all the submodules pulled in correctly:
 `git submodule init`
-`git submodule update`
-
-You'll then want to check out the develop branch:
-`cd isb/isamples_inabox`
-`git checkout develop`
+If you've already done that, make sure that you are up to date with all of the remote branches specified in `.gitmodules`:
+`git submodule update --remote`
 
 Then cd up to the isb docker directory and initialize git lfs:
 `cd ..`
