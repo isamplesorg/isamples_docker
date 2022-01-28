@@ -3,15 +3,24 @@
 # Build the React app using multistage builds (https://docs.docker.com/develop/develop-images/multistage-build/)
 FROM node:latest AS node_build
 WORKDIR /app
+# This puts all the node binaries on the executable path inside the image
 ENV PATH /app/node_modules/.bin:$PATH
+# Copy the node dependencies into the image before we install the npm dependencies
 COPY ./isamples_webui/faceted_search/package.json ./
 COPY ./isamples_webui/faceted_search/package-lock.json ./
+# Install all the npm dependencies
 RUN npm ci --silent
+# Copy the solr-faceted-search-react source into the image so npm link will work
 COPY ./solr-faceted-search-react /solr-faceted-search-react
+# npm link solr-faceted-search-react into the current directory before we run the build
 RUN npm link /solr-faceted-search-react
+# Copy the main source into the image
 COPY ./isamples_webui/faceted_search/ ./
+# Run the build -- by default this will place the build output in ./build, which is why we copy out of /app/build later on
 RUN npm run build
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+
+# Uncomment this to test the node build and run this image by itself  -- useful for debugging (docker build --target node_build .)
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
 
 
 
@@ -50,7 +59,10 @@ RUN mkdir /var/log/isamples
 RUN chmod 755 /var/log/isamples
 
 # Put the React build output inside isb_web ui directory for serving as part of the uvicorn installation
-COPY --from=node_build /build/ /app/isb_web/ui/
+# This statement is a bit confusing -- the --from=node_build is the build stage we are copying *from*,
+# and the /app/build is the path in *that* image (the multistage builds produce separate images).  The
+# dest path (/app/isb_web/ui) is the path in *this* image.
+COPY --from=node_build /app/build/ /app/isb_web/ui/
 
 
 # Start this up in a shell script, per https://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/
