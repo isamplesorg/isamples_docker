@@ -23,6 +23,7 @@ services:
             args:
                 CRONTAB_FILE: ${CRONTAB_FILE}
                 ENV_FILE: ${ENV_FILE}
+                ISB_SITEMAP_PREFIX: https://${ISB_HOST}/${UVICORN_ROOT_PATH}
                 
         ports:
             # In the Docker network, start on 8000 and map that to the external port specified in the environment file

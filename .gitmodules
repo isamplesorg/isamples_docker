@@ -2,3 +2,11 @@
 	path = isb/isamples_inabox
 	url = https://github.com/isamplesorg/isamples_inabox.git
 	branch = develop
+[submodule "isb/isamples_webui"]
+	path = isb/isamples_webui
+	url = https://github.com/isamplesorg/isamples_webui.git
+	branch = develop    
+[submodule "isb/solr-faceted-search-react"]
+	path = isb/solr-faceted-search-react
+	url = https://github.com/isamplesorg/solr-faceted-search-react.git
+	branch = develop

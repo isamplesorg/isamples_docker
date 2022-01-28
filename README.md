@@ -13,13 +13,10 @@ Location to store resources needed to build iSamples Docker containers
     https://git-lfs.github.com
     
 ## How to build container
-First initialize the submodules so you have iSamples in a box pulled in correctly:
+First initialize the submodules so you have all the submodules pulled in correctly:
 `git submodule init`
-`git submodule update`
-
-You'll then want to check out the develop branch:
-`cd isb/isamples_inabox`
-`git checkout develop`
+If you've already done that, make sure that you are up to date with all of the remote branches specified in `.gitmodules`:
+`git submodule update --remote`
 
 Then cd up to the isb docker directory and initialize git lfs:
 `cd ..`
@@ -94,6 +91,26 @@ Then rebuild the container. The containers operated with `systemd` are removed o
 Information about an image can be found with:
 ```
 sudo docker image history solr
+```
+
+### React build output
+The React build output is copied to the iSamples in a Box image and served from uvicorn at the `/ui` path.  During development, it is helpful to run the React build by itself.  You may do so like this:
+
+```
+docker build --target node_build .
+```
+
+This will create an image and you can grab the image id for the image by running `docker image ls`.  After that you may run the image and open a shell by:
+
+```
+docker run image_id_
+docker exec -it image_id bash
+```
+
+Inside the image, the build output will be located at `/app/build` -- you may copy that out of the image and open it in your favorite web browser if need be:
+
+```
+docker cp image_name:/app/build ~/Desktop/
 ```
 
 ## Setting up nginx
