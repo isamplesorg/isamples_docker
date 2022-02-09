@@ -17,8 +17,9 @@ RUN npm link /solr-faceted-search-react
 # Copy the main source into the image
 COPY ./isamples_webui/faceted_search/ ./
 ARG ISB_SITEMAP_PREFIX=https://mars.cyverse.org
+ARG ANALYTICS_DOMAIN=isamples.org
 # write out the JSON config for the specific solr URL to hit in the webUI
-RUN echo "{\n    \"solr_url\": \"$ISB_SITEMAP_PREFIX/thing/select\"\n}" | tee ./src/config.json
+RUN echo "{\n    \"solr_url\": \"$ISB_SITEMAP_PREFIX/thing/select\",    \"analytics_src\": \"https://metrics.isample.xyz/js/plausible.js\",\n    \"analytics_domain\": \"$ANALYTICS_DOMAIN\"\n}" | tee ./src/config.json
 # Run the build -- by default this will place the build output in ./build, which is why we copy out of /app/build later on
 RUN npm run build
 
