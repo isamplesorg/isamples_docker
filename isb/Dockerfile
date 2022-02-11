@@ -6,25 +6,18 @@ WORKDIR /app
 # This puts all the node binaries on the executable path inside the image
 ENV PATH /app/node_modules/.bin:$PATH
 # Copy the node dependencies into the image before we install the npm dependencies
-COPY ./isamples_webui/faceted_search/package.json ./
-COPY ./isamples_webui/faceted_search/package-lock.json ./
+COPY ./isamples_webui/package.json ./
+COPY ./isamples_webui/package-lock.json ./
 # Install all the npm dependencies
 RUN npm ci --silent
-# Copy the solr-faceted-search-react source into the image so npm link will work
-COPY ./solr-faceted-search-react /solr-faceted-search-react
-# npm link solr-faceted-search-react into the current directory before we run the build
-RUN npm link /solr-faceted-search-react
 # Copy the main source into the image
-COPY ./isamples_webui/faceted_search/ ./
+COPY ./isamples_webui/ ./
 ARG ISB_SITEMAP_PREFIX=https://mars.cyverse.org
 ARG ANALYTICS_DOMAIN=isamples.org
 # write out the JSON config for the specific solr URL to hit in the webUI
 RUN echo "{\n    \"solr_url\": \"$ISB_SITEMAP_PREFIX/thing/select\",    \"analytics_src\": \"https://metrics.isample.xyz/js/plausible.js\",\n    \"analytics_domain\": \"$ANALYTICS_DOMAIN\"\n}" | tee ./src/config.json
 # Run the build -- by default this will place the build output in ./build, which is why we copy out of /app/build later on
 RUN npm run build
-
-# Uncomment this to test the node build and run this image by itself  -- useful for debugging (docker build --target node_build .)
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
 
 
 
