@@ -16,6 +16,8 @@ services:
         ports:
             - "${SOLR_PORT}:8983"            
         command: solr -f -cloud
+        environment:
+            - SOLR_HEAP=1024m
         
     isamples_inabox:
         build:
