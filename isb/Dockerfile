@@ -15,8 +15,7 @@ COPY ./isamples_webui/ ./
 ARG ISB_SITEMAP_PREFIX=https://mars.cyverse.org
 ARG ANALYTICS_DOMAIN=isamples.org
 # write out the JSON config for the specific solr URL to hit in the webUI
-RUN echo "const _solr_base = \"https://hyde.cyverse.org/isamples_central/thing/\";\nexport default {\n  \"solr_url\": _solr_base + \"select\",\n  \"solr_stream\": _solr_base + \"stream\",\n  \"analytics_src\": \"https://metrics.isample.xyz/js/plausible.js\",\n  \"analytics_domain\": \"isamples.org\"\n
-}" | tee ./src/config.js
+RUN echo "const _solr_base = \"https://hyde.cyverse.org/isamples_central/thing/\";\n\nconst config = {\n  \"solr_url\": _solr_base + \"select\",\n  \"solr_stream\": _solr_base + \"stream\",\n  \"analytics_src\": \"https://metrics.isample.xyz/js/plausible.js\",\n  \"analytics_domain\": \"isamples.org\"\n};\n\nexport default config;" | tee ./src/config.js
 # Run the build -- by default this will place the build output in ./build, which is why we copy out of /app/build later on
 RUN npm run build
 
