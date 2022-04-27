@@ -61,6 +61,19 @@ RUN chmod 755 /var/log/isamples
 # dest path (/app/isb_web/ui) is the path in *this* image.
 COPY --from=node_build /app/build/ /app/isb_web/ui/
 
+# Install nodejs in the container
+USER root
+WORKDIR /app
+COPY ./elevate/package.json ./
+# Copy elevate source to the container
+RUN mkdir /app/elevate/
+COPY ./elevate ./elevate
+RUN apt-get update
+RUN apt-get -y install curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
+RUN apt-get -y install nodejs
+RUN npm install
+
 
 # Start this up in a shell script, per https://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/
 CMD [ "/app/isb_container_startup.sh" ]
