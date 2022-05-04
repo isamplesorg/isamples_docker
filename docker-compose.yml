@@ -38,6 +38,8 @@ services:
         environment:
             - ISB_UVICORN_ROOT_PATH=${UVICORN_ROOT_PATH}
             - ISB_SITEMAP_PREFIX=https://${ISB_HOST}/${UVICORN_ROOT_PATH}
+        volumes:
+            - sitemaps_data:/app/sitemaps
 
 
     solr_schema_init:
@@ -52,4 +54,6 @@ volumes:
         name: ${PG_VOLUME_NAME}
     solr_data:
         name: ${SOLR_VOLUME_NAME}
+    sitemaps_data:
+        name: ${SITEMAPS_VOLUME_NAME}
         
