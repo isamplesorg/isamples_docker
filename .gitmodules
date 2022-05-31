@@ -5,7 +5,7 @@
 [submodule "isb/isamples_webui"]
 	path = isb/isamples_webui
 	url = https://github.com/isamplesorg/isamples_webui.git
-	branch = develop
+	branch = gh-pages
 [submodule "isb/elevate"]
 	path = isb/elevate
 	url = https://github.com/isamplesorg/elevate.git
