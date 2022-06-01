@@ -37,15 +37,15 @@ RUN chmod 755 /var/log/isamples
 # This is built as part of the web_ui github action -- then the output is checked out in the gh-pages branch, copied to 
 # the container, and we run python inside the container to search and replace the necessary values in the container itself.
 ARG ISB_SITEMAP_PREFIX=https://mars.cyverse.org
-RUN echo "ISB_SITEMAP_PREFIX IS $ISB_SITEMAP_PREFIX"
+ARG ANALYTICS_DOMAIN=isamples.org
+RUN echo "ISB_SITEMAP_PREFIX IS $ISB_SITEMAP_PREFIX ANALYTICS_DOMAIN is $ANALYTICS_DOMAIN"
 COPY ./isamples_webui/asset-manifest.json /app/isb_web/ui/
 COPY ./isamples_webui/cesium /app/isb_web/ui/cesium
 COPY ./isamples_webui/index.html /app/isb_web/ui/
 COPY ./isamples_webui/manifest.json /app/isb_web/ui/
 COPY ./isamples_webui/robots.txt /app/isb_web/ui/
 COPY ./isamples_webui/static /app/isb_web/ui/static
-COPY ./massage_webui_output.py .
-RUN python /app/massage_webui_output.py -u https://hyde.cyverse.org/isamples_central -r $ISB_SITEMAP_PREFIX -p /app/isb_web/ui/static/js
+RUN echo "const _solr_base = \"$ISB_SITEMAP_PREFIX/thing/\";\n\nconst config = {\n  \"solr_url\": _solr_base + \"select\",\n  \"solr_stream\": _solr_base + \"stream\",\n  \"analytics_src\": \"https://metrics.isample.xyz/js/plausible.js\",\n  \"analytics_domain\": \"$ANALYTICS_DOMAIN\"\n};\n\nwindow.config = config;" | tee /app/isb_web/ui/config.js
 
 # Install nodejs in the container
 USER root
