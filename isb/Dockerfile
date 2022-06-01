@@ -39,11 +39,11 @@ RUN chmod 755 /var/log/isamples
 ARG ISB_SITEMAP_PREFIX=https://mars.cyverse.org
 RUN echo "ISB_SITEMAP_PREFIX IS $ISB_SITEMAP_PREFIX"
 COPY ./isamples_webui/asset-manifest.json /app/isb_web/ui/
-COPY ./isamples_webui/cesium /app/isb_web/ui/
+COPY ./isamples_webui/cesium /app/isb_web/ui/cesium
 COPY ./isamples_webui/index.html /app/isb_web/ui/
 COPY ./isamples_webui/manifest.json /app/isb_web/ui/
 COPY ./isamples_webui/robots.txt /app/isb_web/ui/
-COPY ./isamples_webui/static /app/isb_web/ui/
+COPY ./isamples_webui/static /app/isb_web/ui/static
 COPY ./massage_webui_output.py .
 RUN python /app/massage_webui_output.py -u https://hyde.cyverse.org/isamples_central -r $ISB_SITEMAP_PREFIX -p /app/isb_web/ui/static/js
 
