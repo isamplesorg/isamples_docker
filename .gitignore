@@ -1,2 +1,4 @@
 # This file is laid down by the ansible script that builds the virtual machine.  Make it ignored so we don't run into issues about not having a clean repository (which makes ansible unhappy)
 .env.isamples_inabox
+# Secrets aren't checked in to git
+secrets
