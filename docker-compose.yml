@@ -40,6 +40,9 @@ services:
             - ISB_SITEMAP_PREFIX=https://${ISB_HOST}/${UVICORN_ROOT_PATH}
         volumes:
             - sitemaps_data:/app/sitemaps
+        secrets:
+            - orcid_client_id
+            - orcid_client_secret
 
 
     solr_schema_init:
@@ -57,3 +60,8 @@ volumes:
     sitemaps_data:
         name: ${SITEMAPS_VOLUME_NAME}
         
+secrets:
+    orcid_client_id:
+        file: ./secrets/orcid_client_id
+    orcid_client_secret:
+        file: ./secrets/orcid_client_secret

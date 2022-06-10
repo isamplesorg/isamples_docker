@@ -113,6 +113,11 @@ Inside the image, the build output will be located at `/app/build` -- you may co
 docker cp image_name:/app/build ~/Desktop/
 ```
 
+### Secrets
+Docker secrets are configured using the Docker secrets feature: https://docs.docker.com/compose/compose-file/#secrets
+
+There is a manual setup step where there needs to be a secrets directory created as a child of the docker checkout on the target machine.  Currently, it is expected to contain two plaintext files called `orcid_client_id` and `orcid_client_secret`.
+
 ## Setting up nginx
 
 [`nginx`](https://www.nginx.com/) can be configured as the front-end web server for the web serverice offered by the docker instance. These commands all require sudo.
