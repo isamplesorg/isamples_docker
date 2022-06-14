@@ -39,13 +39,15 @@ RUN chmod 755 /var/log/isamples
 ARG ISB_SITEMAP_PREFIX=https://mars.cyverse.org
 ARG ANALYTICS_DOMAIN=isamples.org
 RUN echo "ISB_SITEMAP_PREFIX IS $ISB_SITEMAP_PREFIX ANALYTICS_DOMAIN is $ANALYTICS_DOMAIN"
+ARG DATACITE_PREFIX="123456"
+RUN echo "ISB_SITEMAP_PREFIX IS $ISB_SITEMAP_PREFIX ANALYTICS_DOMAIN is $ANALYTICS_DOMAIN DATACITE_PREFIX IS $DATACITE_PREFIX"
 COPY ./isamples_webui/asset-manifest.json /app/isb_web/ui/
 COPY ./isamples_webui/cesium /app/isb_web/ui/cesium
 COPY ./isamples_webui/index.html /app/isb_web/ui/
 COPY ./isamples_webui/manifest.json /app/isb_web/ui/
 COPY ./isamples_webui/robots.txt /app/isb_web/ui/
 COPY ./isamples_webui/static /app/isb_web/ui/static
-RUN echo "const _solr_base = \"$ISB_SITEMAP_PREFIX/thing/\";\n\nconst config = {\n  \"solr_url\": _solr_base + \"select\",\n  \"solr_stream\": _solr_base + \"stream\",\n  \"analytics_src\": \"https://metrics.isample.xyz/js/plausible.js\",\n  \"analytics_domain\": \"$ANALYTICS_DOMAIN\"\n};\n\nwindow.config = config;" | tee /app/isb_web/ui/config.js
+RUN echo "const _solr_base = \"$ISB_SITEMAP_PREFIX/thing/\";\n\nconst config = {\n  \"solr_url\": _solr_base + \"select\",\n  \"solr_stream\": _solr_base + \"stream\",\n  \"analytics_src\": \"https://metrics.isample.xyz/js/plausible.js\",\n  \"analytics_domain\": \"$ANALYTICS_DOMAIN\",\n  \"datacite_prefix\": \"$DATACITE_PREFIX\"\n};\n\nwindow.config = config;" | tee /app/isb_web/ui/config.js
 
 # Install nodejs in the container
 USER root

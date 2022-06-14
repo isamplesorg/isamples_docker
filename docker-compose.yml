@@ -28,6 +28,7 @@ services:
                 ENV_FILE: ${ENV_FILE}
                 ISB_SITEMAP_PREFIX: https://${ISB_HOST}/${UVICORN_ROOT_PATH}
                 ANALYTICS_DOMAIN: ${ANALYTICS_DOMAIN}
+                DATACITE_PREFIX: ${DATACITE_PREFIX}
                 
         ports:
             # In the Docker network, start on 8000 and map that to the external port specified in the environment file
