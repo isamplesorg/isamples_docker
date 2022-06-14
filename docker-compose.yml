@@ -43,6 +43,8 @@ services:
         secrets:
             - orcid_client_id
             - orcid_client_secret
+            - datacite_username
+            - datacite_password
 
 
     solr_schema_init:
@@ -65,3 +67,7 @@ secrets:
         file: ./secrets/orcid_client_id
     orcid_client_secret:
         file: ./secrets/orcid_client_secret
+    datacite_username:
+        file: ./secrets/datacite_username
+    datacite_password:
+        file: ./secrets/datacite_password
