@@ -15,6 +15,7 @@ RUN apt-get update -y && apt-get install -y libgeos-dev && apt-get install -y cr
 COPY ./isamples_inabox/ .
 COPY ./isamples_metadata.env .
 COPY ./sampledFeature.bin .
+COPY ./metadata_models .
 COPY ./isb.cfg .
 COPY ./isb_container_startup.sh .
 COPY ./cron/ .
@@ -61,6 +62,8 @@ RUN apt-get -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
 RUN apt-get -y install nodejs
 RUN npm install
+
+
 
 
 # Start this up in a shell script, per https://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/
