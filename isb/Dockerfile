@@ -13,7 +13,6 @@ RUN pip3 install -r requirements.txt
 RUN apt-get update -y && apt-get install -y libgeos-dev && apt-get install -y cron
 
 COPY ./isamples_inabox/ .
-COPY ./isamples_metadata.env .
 COPY ./sampledFeature.bin .
 COPY ./metadata_models .
 COPY ./isb.cfg .
