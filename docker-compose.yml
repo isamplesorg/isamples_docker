@@ -10,7 +10,7 @@ services:
         volumes:
             - pg_data:/var/lib/postgresql/data
         ports:
-            - "${PG_PORT}:5432"			
+            - "${PG_PORT}:5432"
         
     solr:
         build: ./solr/
