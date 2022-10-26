@@ -1,7 +1,9 @@
 # syntax=docker/dockerfile:1
 # Build the main Python app
-FROM python:latest AS main
+FROM python:3.9.15 AS main
 
+# unclear if this is needed -- probably not…
+# RUN pip3 install --upgrade pip
 WORKDIR /app
 
 # The installation of the python requirements should be basically the first thing here.  Docker files will re-run steps
