@@ -13,6 +13,7 @@ services:
             - "${PG_PORT}:5432"
         
     solr:
+        image: dannymandel/solr
         build: ./solr/
         volumes:
             - solr_data:/var/solr
@@ -23,6 +24,7 @@ services:
             - SOLR_HEAP=1024m
         
     isamples_inabox:
+        image: dannymandel/isamples_inabox
         build:
             context: ./isb/
             args:
@@ -49,14 +51,6 @@ services:
             - orcid_client_secret
             - datacite_username
             - datacite_password
-
-
-    solr_schema_init:
-        build: ./isb/
-        depends_on:
-            - isamples_inabox
-            - solr
-        command: python solr_schema_init/create_isb_core_schema.py    
     
 volumes:
     pg_data:
