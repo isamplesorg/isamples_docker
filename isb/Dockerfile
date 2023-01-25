@@ -17,7 +17,6 @@ RUN apt-get update -y && apt-get install -y libgeos-dev && apt-get install -y cr
 COPY ./isamples_inabox/ .
 # Copy metadata models 
 COPY ./sampledFeature.bin .
-COPY ./metadata_models/ ./metadata_models/
 COPY ./isb.cfg .
 COPY ./isb_container_startup.sh .
 COPY ./cron/ .
