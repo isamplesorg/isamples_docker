@@ -20,7 +20,7 @@ services:
             - "${SOLR_PORT}:8983"            
         command: solr -f -cloud
         environment:
-            - SOLR_HEAP=1024m
+            - SOLR_HEAP=8192m
         
     isamples_inabox:
         build:
@@ -44,6 +44,7 @@ services:
             - ISB_SITEMAP_PREFIX=https://${ISB_HOST}/${UVICORN_ROOT_PATH}
         volumes:
             - sitemaps_data:/app/sitemaps
+            - metadata_models:/app/metadata_models
         secrets:
             - orcid_client_id
             - orcid_client_secret
@@ -65,6 +66,8 @@ volumes:
         name: ${SOLR_VOLUME_NAME}
     sitemaps_data:
         name: ${SITEMAPS_VOLUME_NAME}
+    metadata_models:
+        name: metadata_models
         
 secrets:
     orcid_client_id:
