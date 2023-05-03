@@ -11,17 +11,36 @@ services:
             - pg_data:/var/lib/postgresql/data
         ports:
             - "${PG_PORT}:5432"
-        
+    db_exporter:
+        image: quay.io/prometheuscommunity/postgres-exporter
+        environment:
+            - DATA_SOURCE_NAME=postgresql://isb_writer:isamplesinabox@db:5432/postgres?sslmode=disable
+        expose:
+            - "9187"
+        depends_on:
+            - db
+
     solr:
         build: ./solr/
         volumes:
             - solr_data:/var/solr
         ports:
-            - "${SOLR_PORT}:8983"            
+            - "${SOLR_PORT}:8983"
+        expose:
+            - "9983"
         command: solr -f -cloud
         environment:
             - SOLR_HEAP=8192m
-        
+
+    solr_exporter:
+        build: ./solr/
+        command: solr-exporter
+        environment:
+            - ZK_HOST=solr:9983
+        expose:
+            - "8989"
+        depends_on:
+            - solr
     isamples_inabox:
         build:
             context: ./isb/
@@ -32,7 +51,7 @@ services:
                 ANALYTICS_DOMAIN: ${ANALYTICS_DOMAIN}
                 DATACITE_PREFIX: ${DATACITE_PREFIX}
                 DATACITE_PUBLISHER: ${DATACITE_PUBLISHER}
-                
+
         ports:
             # In the Docker network, start on 8000 and map that to the external port specified in the environment file
             - "${ISB_PORT}:8000"
