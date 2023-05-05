@@ -41,6 +41,32 @@ services:
             - "8989"
         depends_on:
             - solr
+
+    node_exporter:
+        image: quay.io/prometheus/node-exporter:latest
+        container_name: node_exporter
+        command:
+            - '--path.rootfs=/host'
+        network_mode: host
+        pid: host
+        restart: unless-stopped
+        volumes:
+            - '/:/host:ro,rslave'
+        expose:
+            - "9100"
+
+    prometheus:
+        build: ./prometheus
+        ports:
+            - "9090:9090"
+        depends_on:
+            - solr_exporter
+            - db_exporter
+        volumes:
+            - prometheus_data:/prometheus
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
     isamples_inabox:
         build:
             context: ./isb/
@@ -87,6 +113,8 @@ volumes:
         name: ${SITEMAPS_VOLUME_NAME}
     metadata_models:
         name: metadata_models
+    prometheus_data:
+        name: prometheus_data
         
 secrets:
     orcid_client_id:
