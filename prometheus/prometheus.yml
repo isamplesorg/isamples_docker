@@ -34,3 +34,9 @@ scrape_configs:
   - job_name: 'solr-exporter'
     static_configs:
       - targets: ['solr_exporter:8989']
+      
+  - job_name: 'isb-exporter'
+    # scrape the iSB metrics once a day
+    scrape_interval: 86400s
+    static_configs:
+      - targets: ['isamples_inabox:8000']      
