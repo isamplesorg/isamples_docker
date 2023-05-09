@@ -11,17 +11,62 @@ services:
             - pg_data:/var/lib/postgresql/data
         ports:
             - "${PG_PORT}:5432"
-        
+    db_exporter:
+        image: quay.io/prometheuscommunity/postgres-exporter
+        environment:
+            - DATA_SOURCE_NAME=postgresql://isb_writer:isamplesinabox@db:5432/postgres?sslmode=disable
+        expose:
+            - "9187"
+        depends_on:
+            - db
+
     solr:
         build: ./solr/
         volumes:
             - solr_data:/var/solr
         ports:
-            - "${SOLR_PORT}:8983"            
+            - "${SOLR_PORT}:8983"
+        expose:
+            - "9983"
         command: solr -f -cloud
         environment:
             - SOLR_HEAP=8192m
-        
+
+    solr_exporter:
+        build: ./solr/
+        command: solr-exporter
+        environment:
+            - ZK_HOST=solr:9983
+        expose:
+            - "8989"
+        depends_on:
+            - solr
+
+    node_exporter:
+        image: quay.io/prometheus/node-exporter:latest
+        container_name: node_exporter
+        command:
+            - '--path.rootfs=/host'
+        network_mode: host
+        pid: host
+        restart: unless-stopped
+        volumes:
+            - '/:/host:ro,rslave'
+        expose:
+            - "9100"
+
+    prometheus:
+        build: ./prometheus
+        ports:
+            - "9090:9090"
+        depends_on:
+            - solr_exporter
+            - db_exporter
+        volumes:
+            - prometheus_data:/prometheus
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
     isamples_inabox:
         build:
             context: ./isb/
@@ -32,7 +77,7 @@ services:
                 ANALYTICS_DOMAIN: ${ANALYTICS_DOMAIN}
                 DATACITE_PREFIX: ${DATACITE_PREFIX}
                 DATACITE_PUBLISHER: ${DATACITE_PUBLISHER}
-                
+
         ports:
             # In the Docker network, start on 8000 and map that to the external port specified in the environment file
             - "${ISB_PORT}:8000"
@@ -68,6 +113,8 @@ volumes:
         name: ${SITEMAPS_VOLUME_NAME}
     metadata_models:
         name: metadata_models
+    prometheus_data:
+        name: prometheus_data
         
 secrets:
     orcid_client_id:
