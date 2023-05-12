@@ -31,6 +31,13 @@ services:
         command: solr -f -cloud
         environment:
             - SOLR_HEAP=8192m
+        healthcheck:
+            test: ["CMD-SHELL", "curl -sf http://localhost:8983/solr/isb_core_records/admin/ping?wt=json | grep -i \"ok\" || exit 1"]
+            start_period: 15s
+            interval: 10s
+            timeout: 5s
+            retries: 3
+
 
     solr_exporter:
         build: ./solr/
@@ -40,7 +47,8 @@ services:
         expose:
             - "8989"
         depends_on:
-            - solr
+            solr:
+                condition: service_healthy
 
     node_exporter:
         image: quay.io/prometheus/node-exporter:latest
@@ -62,6 +70,7 @@ services:
         depends_on:
             - solr_exporter
             - db_exporter
+            - isamples_inabox
         volumes:
             - prometheus_data:/prometheus
         extra_hosts:

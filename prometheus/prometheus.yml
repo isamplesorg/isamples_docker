@@ -37,6 +37,6 @@ scrape_configs:
       
   - job_name: 'isb-exporter'
     # scrape the iSB metrics once a day
-    scrape_interval: 86400s
+    scrape_interval: 60s
     static_configs:
       - targets: ['isamples_inabox:8000']      
