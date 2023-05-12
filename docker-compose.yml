@@ -110,8 +110,7 @@ services:
         build: ./isb/
         depends_on:
             - isamples_inabox
-            solr:
-                condition: service_healthy
+            - solr
         command: python solr_schema_init/create_isb_core_schema.py    
     
 volumes:
