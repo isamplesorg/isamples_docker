@@ -15,8 +15,8 @@ services:
         image: quay.io/prometheuscommunity/postgres-exporter
         environment:
             - DATA_SOURCE_NAME=postgresql://isb_writer:isamplesinabox@db:5432/postgres?sslmode=disable
-        expose:
-            - "9187"
+        ports:
+            - "9187:9187"
         depends_on:
             - db
 
@@ -44,8 +44,8 @@ services:
         command: solr-exporter
         environment:
             - ZK_HOST=solr:9983
-        expose:
-            - "8989"
+        ports:
+            - "8989:8989"
         depends_on:
             solr:
                 condition: service_healthy
@@ -60,21 +60,10 @@ services:
         restart: unless-stopped
         volumes:
             - '/:/host:ro,rslave'
-        expose:
-            - "9100"
-
-    prometheus:
-        build: ./prometheus
         ports:
-            - "9090:9090"
-        depends_on:
-            - solr_exporter
-            - db_exporter
-            - isamples_inabox
-        volumes:
-            - prometheus_data:/prometheus
-        extra_hosts:
-            - "host.docker.internal:host-gateway"
+            - "9100:9100"
+
+
 
     isamples_inabox:
         build:
