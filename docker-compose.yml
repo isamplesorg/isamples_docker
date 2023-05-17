@@ -16,7 +16,7 @@ services:
         environment:
             - DATA_SOURCE_NAME=postgresql://isb_writer:isamplesinabox@db:5432/postgres?sslmode=disable
         ports:
-            - "9187:9187"
+            - "0.0.0.0:9187:9187"
         depends_on:
             - db
 
@@ -45,7 +45,7 @@ services:
         environment:
             - ZK_HOST=solr:9983
         ports:
-            - "8989:8989"
+            - "0.0.0.0:8989:8989"
         depends_on:
             solr:
                 condition: service_healthy
@@ -61,7 +61,7 @@ services:
         volumes:
             - '/:/host:ro,rslave'
         ports:
-            - "9100:9100"
+            - "0.0.0.0:9100:9100"
 
 
 
@@ -111,8 +111,6 @@ volumes:
         name: ${SITEMAPS_VOLUME_NAME}
     metadata_models:
         name: metadata_models
-    prometheus_data:
-        name: prometheus_data
         
 secrets:
     orcid_client_id:
