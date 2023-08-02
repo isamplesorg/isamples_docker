@@ -2,7 +2,7 @@ version: "3.8"
 services:
     db:
         image: postgres
-        shm_size: 128M
+        shm_size: 1g
         environment:
             - POSTGRES_PASSWORD=isamplesinabox
             - POSTGRES_USER=isb_writer
