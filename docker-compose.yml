@@ -1,7 +1,7 @@
 version: "3.8"
 services:
     db:
-        image: postgres
+        build: ./postgres/
         shm_size: 1g
         environment:
             - POSTGRES_PASSWORD=isamplesinabox
@@ -11,6 +11,8 @@ services:
             - pg_data:/var/lib/postgresql/data
         ports:
             - "${PG_PORT}:5432"
+        # Use the custom config that we copy over in our Dockerfile build
+        command: postgres -c config_file=/etc/postgresql.conf
     db_exporter:
         image: quay.io/prometheuscommunity/postgres-exporter
         environment:
