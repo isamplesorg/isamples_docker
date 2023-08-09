@@ -13,4 +13,4 @@ declare -p | grep -Ev 'BASHOPTS|BASH_VERSINFO|EUID|PPID|SHELLOPTS|UID' > /contai
 /usr/sbin/service cron start
 export PYTHONPATH=/app
 /usr/local/bin/python scripts/create_sitemaps_symlink.py -s /app/sitemaps  -d /app/isb_web/sitemaps
-uvicorn isb_web.main:app --host 0.0.0.0 --port 8000 --root-path /$ISB_UVICORN_ROOT_PATH --workers 12
+uvicorn isb_web.main:app --host 0.0.0.0 --port 8000 --root-path /$ISB_UVICORN_ROOT_PATH --workers 12 --proxy-headers --forwarded-allow-ips '*'
