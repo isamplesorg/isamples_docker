@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # Build the main Python app
-FROM python:3.9.15 AS main
+FROM python:3.11.6 AS main
 
 # unclear if this is needed -- probably not…
 # RUN pip3 install --upgrade pip
