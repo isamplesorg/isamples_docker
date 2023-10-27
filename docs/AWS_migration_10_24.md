@@ -233,6 +233,15 @@ solr@dba2f0262bb0:/var/solr/data/backup$curl "http://localhost:8983/solr/isb_cor
     …
 ```
 
+### Setting domain name
+
+Goal is to have central served from central.isample.xyz.
+
+1. Added A record in DNS pointing to hyde.cyverse.org external IP
+2. Added central.isample.xyz to lets encrypt certificate, `sudo certbot --nginx -d hyde.cyverse.org -d central.isample.xyz`
+3. Adjust entries in `.env.isamples_central`
+
+
 ## plausible.io setup
 Followed instructions in https://github.com/isamplesorg/isamples_metrics/blob/main/README.md
 
