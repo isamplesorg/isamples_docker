@@ -232,3 +232,12 @@ solr@dba2f0262bb0:/var/solr/data/backup$curl "http://localhost:8983/solr/isb_cor
     "docs":[{
     …
 ```
+
+## Container inventory
+
+| Container | Machine | Git Repo | Documentation |
+|:----------|:--------|:---------|:--------------|
+| iSB       | hyde.cyverse.org | git@github.com:isamplesorg/isamples_docker.git      |https://github.com/isamplesorg/isamples_docker/blob/develop/README.md|
+| iSamples Modelserver | hyde.cyverse.org | git@github.com:isamplesorg/isamples_modelserver.git | https://github.com/isamplesorg/isamples_modelserver/blob/develop/README.md |
+| Prometheus | mars.cyverse.org | git@github.com:isamplesorg/isamples_metrics.git | https://github.com/isamplesorg/isamples_metrics/blob/main/README.md |
+| plausible.io | mars.cyverse.org| git@github.com:isamplesorg/isamples_metrics.git| https://github.com/isamplesorg/isamples_metrics/blob/main/README.md |
