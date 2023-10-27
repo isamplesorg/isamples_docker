@@ -233,6 +233,12 @@ solr@dba2f0262bb0:/var/solr/data/backup$curl "http://localhost:8983/solr/isb_cor
     …
 ```
 
+## plausible.io setup
+Followed instructions in https://github.com/isamplesorg/isamples_metrics/blob/main/README.md
+
+## prometheus setup
+Followed instructions in https://github.com/isamplesorg/isamples_metrics/blob/main/README.md
+
 ## Container inventory
 
 | Container | Machine | Git Repo | Documentation |
