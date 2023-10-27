@@ -87,7 +87,6 @@ services:
         environment:
             - ISB_UVICORN_ROOT_PATH=${UVICORN_ROOT_PATH}
             - ISB_SITEMAP_PREFIX=https://${ISB_HOST}/${UVICORN_ROOT_PATH}
-            - ANALYTICS_URL=${ANALYTICS_URL}
         volumes:
             - sitemaps_data:/app/sitemaps
             - metadata_models:/app/metadata_models
