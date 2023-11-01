@@ -75,6 +75,7 @@ services:
                 ENV_FILE: ${ENV_FILE}
                 ISB_SITEMAP_PREFIX: https://${ISB_HOST}/${UVICORN_ROOT_PATH}
                 ANALYTICS_DOMAIN: ${ANALYTICS_DOMAIN}
+                ANALYTICS_SRC: ${ANALYTICS_SRC}
                 DATACITE_PREFIX: ${DATACITE_PREFIX}
                 DATACITE_PUBLISHER: ${DATACITE_PUBLISHER}
 
