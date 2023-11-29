@@ -2,3 +2,4 @@
 .env.isamples_inabox
 # Secrets aren't checked in to git
 secrets
+.DS_Store
