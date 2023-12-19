@@ -3,7 +3,7 @@
 cd /app
 export PYTHONPATH=/app
 echo "Going to invoke OpenContext update load"
-#/usr/local/bin/python scripts/opencontext_things.py --config ./isb.cfg load -m -1 >& /var/log/isamples/`date "+%Y-%m-%d"`.opencontext_load.txt
+/usr/local/bin/python scripts/opencontext_things.py --config ./isb.cfg load -m -1 >& /var/log/isamples/`date "+%Y-%m-%d"`.opencontext_load.txt
 echo "Going to populate points for any new h3 values"
 /usr/local/bin/python scripts/migrations/populate_points_for_h3.py --config ./isb.cfg >& /var/log/isamples/`date "+%Y-%m-%d"`.opencontext_points.txt
 echo "Going to fetch heights for any points without height values"
