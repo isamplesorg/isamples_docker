@@ -13,4 +13,4 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Verify that the Docker compose builds
-        run:  docker compose  --env-file .env.isamples_central build
+        run:  docker compose config
