@@ -1,0 +1,16 @@
+# Integration test that runs the docker build and ensures that things build properly
+name: build
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Verify that the Docker compose builds
+        run:  docker compose  --env-file .env.isamples_central build
