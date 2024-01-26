@@ -33,6 +33,7 @@ services:
         command: solr -f -cloud
         environment:
             - SOLR_HEAP=8192m
+            - SOLR_MODULES=sql
         healthcheck:
             test: ["CMD-SHELL", "curl -sf http://localhost:8983/solr/isb_core_records/admin/ping?wt=json | grep -i \"ok\" || exit 1"]
             start_period: 15s
