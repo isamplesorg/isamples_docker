@@ -13,4 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Verify that the Docker compose builds
-        run:  docker compose config
+        run: docker compose config
+      - name: Run projectatomic's dockerfile_lint on the iSB Dockerfile (https://github.com/projectatomic/dockerfile_lint)
+        run: docker run --rm -v $PWD:/root/ projectatomic/dockerfile-lint dockerfile_lint -f isb/Dockerfile
+      - name: Run projectatomic's dockerfile_lint on the Solr Dockerfile (https://github.com/projectatomic/dockerfile_lint)
+        run: docker run --rm -v $PWD:/root/ projectatomic/dockerfile-lint dockerfile_lint -f solr/Dockerfile
+      - name: Run projectatomic's dockerfile_lint on the PostgreSQL Dockerfile (https://github.com/projectatomic/dockerfile_lint)
+        run: docker run --rm -v $PWD:/root/ projectatomic/dockerfile-lint dockerfile_lint -f postgres/Dockerfile        
