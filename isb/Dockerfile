@@ -1,6 +1,9 @@
 # syntax=docker/dockerfile:1
 # Build the main Python app
-ROM python:3.11.6 AS main
+FROM python:3.11.6 AS main
+
+LABEL name="iSamples in a Box Dockerfile"
+LABEL version=0.1
 
 # unclear if this is needed -- probably not…
 # RUN pip3 install --upgrade pip
